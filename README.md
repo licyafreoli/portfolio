@@ -79,7 +79,7 @@ In addition to local storage, the site can send data to Google Sheets via a Goog
 - `visits` (page visits)
 - `leads` (contact form submissions)
 ---
-### Licença
+### License
 
 All rights reserved
 
