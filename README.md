@@ -78,6 +78,10 @@ Important note:
 In addition to local storage, the site can send data to Google Sheets via a Google Apps Script Web App, writing into tabs such as:
 - `visits` (page visits)
 - `leads` (contact form submissions)
+---
+###Licença
+
+All rights reserved
 
 ---
 
@@ -155,7 +159,8 @@ Observação importante:
 Além do `localStorage`, o site pode enviar dados para uma planilha no Google Sheets via Google Apps Script Web App, gravando em abas como:
 - `visits` (visitas)
 - `leads` (envios do formulário)
+  
+---
+###Licença
 
-##Licença
-
-All rights reserved
+Todos os direitos reservados
