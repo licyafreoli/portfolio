@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lícya Oliveira - Full-Stack Developer & Designer</title>
+  <meta name="description" content="Desenvolvedora full stack e designer especializada em identidade visual e social media.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #0a0a0f;
+      --foreground: #ffffff;
+      --card: #111118;
+      --border: #1e1e2e;
+      --primary: #06b6d4;
+      --muted: #71717a;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      overflow-x: hidden;
+      cursor: none;
+    }
+    
+    /* Custom cursor styles */
+    .cursor-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: #22d3ee;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: transform 0.1s ease;
+    }
+    
+    .cursor-ring {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(6, 182, 212, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.15s ease, border-color 0.3s ease;
+    }
+    
+    .cursor-glow {
+      position: fixed;
+      width: 256px;
+      height: 256px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      transform: translate(-50%, -50%);
+    }
+    
+    .cursor-hover .cursor-dot {
+      transform: scale(1.5);
+      background: #06b6d4;
+    }
+    
+    .cursor-hover .cursor-ring {
+      transform: scale(1.5);
+      border-color: rgba(6, 182, 212, 0.8);
+    }
+    
+    /* Hide custom cursor on mobile/touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      body { cursor: auto; }
+      .cursor-dot, .cursor-ring, .cursor-glow { display: none !important; }
+    }
+    
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor-dot, .cursor-ring, .cursor-glow { display: none !important; }
+    }
+    
+    .bg-background { background-color: var(--background); }
+    .bg-card { background-color: var(--card); }
+    .border-border { border-color: var(--border); }
+    .text-primary { color: var(--primary); }
+    .text-muted { color: var(--muted); }
+    .bg-primary { background-color: var(--primary); }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #06b6d4, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .glow-blue {
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+    }
+    
+    /* Added badge style to match TSX styling */
+    .badge-cyan {
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      color: #22d3ee;
+    }
+    
+    .card-hover:hover {
+      border-color: rgba(6, 182, 212, 0.5);
+      transform: translateY(-2px);
+    }
+    
+    .bg-gradient-blue {
+      background: linear-gradient(180deg, rgba(6, 182, 212, 0.03) 0%, transparent 50%);
+    }
+    
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .skill-bar {
+      transition: width 1s ease-out;
+    }
+    
+    .hover-target {
+      cursor: none;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Success message animation */
+    .success-message {
+      animation: slideIn 0.3s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Custom Cursor Elements -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex items-center justify-between h-16">
+        <!-- Updated logo to match TSX -->
+        <a href="#" class="text-2xl font-bold hover-target">
+          <span class="text-cyan-500">&lt;</span><span>Dev</span><span class="text-cyan-500">/&gt;</span>
+        </a>
+        
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#home" class="text-muted hover:text-primary transition-colors hover-target" data-i18n="nav.home">Início</a>
+          <a href="#sobre" class="text-muted hover:text-primary transition-colors hover-target" data-i18n="nav.about">Sobre</a>
+          <a href="#habilidades" class="text-muted hover:text-primary transition-colors hover-target" data-i18n="nav.skills">Habilidades</a>
+          <a href="#projetos" class="text-muted hover:text-primary transition-colors hover-target" data-i18n="nav.projects">Projetos</a>
+          <a href="#design" class="text-muted hover:text-primary transition-colors hover-target" data-i18n="nav.design">Design</a>
+          <a href="#contato" class="text-muted hover:text-primary transition-colors hover-target" data-i18n="nav.contact">Contato</a>
+        </div>
+        
+        <div class="flex items-center gap-4">
+          <!-- Language Selector with globe icon and country codes -->
+          <div class="relative">
+            <button id="langBtn" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-card border border-border hover:border-primary transition-colors hover-target">
+              <!-- Globe icon -->
+              <svg class="w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              <span id="currentLang">PT</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <!-- Language dropdown with country codes -->
+            <div id="langMenu" class="absolute right-0 mt-2 w-40 bg-card border border-border rounded-lg shadow-lg hidden">
+              <button class="lang-option w-full px-4 py-2 text-left hover:bg-zinc-800 transition-colors rounded-t-lg flex items-center gap-2" data-lang="pt">
+                <span class="text-primary text-sm font-medium">BR</span>
+                <span class="hover:text-primary">Português</span>
+              </button>
+              <button class="lang-option w-full px-4 py-2 text-left hover:bg-zinc-800 transition-colors flex items-center gap-2" data-lang="en">
+                <span class="text-muted text-sm font-medium">US</span>
+                <span class="hover:text-primary">English</span>
+              </button>
+              <button class="lang-option w-full px-4 py-2 text-left hover:bg-zinc-800 transition-colors flex items-center gap-2" data-lang="es">
+                <span class="text-muted text-sm font-medium">ES</span>
+                <span class="hover:text-primary">Español</span>
+              </button>
+              <button class="lang-option w-full px-4 py-2 text-left hover:bg-zinc-800 transition-colors flex items-center gap-2" data-lang="fr">
+                <span class="text-muted text-sm font-medium">FR</span>
+                <span class="hover:text-primary">Français</span>
+              </button>
+              <button class="lang-option w-full px-4 py-2 text-left hover:bg-zinc-800 transition-colors flex items-center gap-2" data-lang="it">
+                <span class="text-muted text-sm font-medium">IT</span>
+                <span class="hover:text-primary">Italiano</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Mobile Menu Button -->
+          <button id="mobileMenuBtn" class="md:hidden p-2 hover-target">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden bg-card border-t border-border">
+      <div class="px-4 py-4 space-y-4">
+        <a href="#home" class="block text-muted hover:text-primary transition-colors" data-i18n="nav.home">Início</a>
+        <a href="#sobre" class="block text-muted hover:text-primary transition-colors" data-i18n="nav.about">Sobre</a>
+        <a href="#habilidades" class="block text-muted hover:text-primary transition-colors" data-i18n="nav.skills">Habilidades</a>
+        <a href="#projetos" class="block text-muted hover:text-primary transition-colors" data-i18n="nav.projects">Projetos</a>
+        <a href="#design" class="block text-muted hover:text-primary transition-colors" data-i18n="nav.design">Design</a>
+        <a href="#contato" class="block text-muted hover:text-primary transition-colors" data-i18n="nav.contact">Contato</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent"></div>
+    <div class="max-w-7xl mx-auto px-4 py-20 text-center relative z-10">
+      <!-- Updated badge styling to match TSX with cyan background and border -->
+      <div class="inline-block mb-8">
+        <span class="px-4 py-2 badge-cyan rounded-full text-sm font-medium" data-i18n="hero.badge">Desenvolvedora & Designer</span>
+      </div>
+      
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+        <span data-i18n="hero.greeting">Criando</span><br>
+        <span class="gradient-text" data-i18n="hero.highlight">experiências digitais únicas</span>
+      </h1>
+      
+      <p class="text-xl md:text-2xl text-muted max-w-3xl mx-auto mb-12" data-i18n="hero.description">
+        Sou Lícya Oliveira. Desenvolvedora full stack e designer especializada em identidade visual e social media. Transformando ideias em produtos digitais extraordinários.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+        <!-- Updated button to match TSX with enhanced glow effect -->
+        <a href="#projetos" class="px-8 py-4 bg-primary text-background rounded-lg font-semibold hover:opacity-90 transition-all hover-target" style="box-shadow: 0 0 20px rgba(6, 182, 212, 0.4), 0 0 40px rgba(6, 182, 212, 0.2);" data-i18n="hero.cta.projects">
+          Ver Projetos
+        </a>
+        <a href="#contato" class="px-8 py-4 border border-border rounded-lg hover:border-primary hover:text-primary transition-all hover-target" data-i18n="hero.cta.contact">
+          Entre em Contato
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-6">
+        <a href="https://github.com/licyafreoli" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-primary transition-colors hover-target">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+        <a href="https://linkedin.com/in/licyaoliveira" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-primary transition-colors hover-target">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+        <a href="https://instagram.com/licyafreoli" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-primary transition-colors hover-target">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="sobre" class="py-24 md:py-32 bg-gradient-blue fade-in">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+          <span data-i18n="about.title">Sobre</span> <span class="text-primary" data-i18n="about.titleHighlight">Mim</span>
+        </h2>
+        <p class="text-xl text-muted max-w-3xl mx-auto" data-i18n="about.description">
+          Há mais de 5 anos ajudo marcas a se posicionarem: construo sua identidade visual para que sua marca reflita seus valores, faço seu site para que ele venda por você, e administro redes sociais que aproximam seu público do seu negócio.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-6 bg-card border border-border rounded-xl card-hover transition-all duration-300">
+          <h3 class="text-xl font-semibold mb-2" data-i18n="about.card1.title">Desenvolvimento</h3>
+          <p class="text-muted text-sm" data-i18n="about.card1.desc">Código limpo e performático</p>
+        </div>
+        <div class="p-6 bg-card border border-border rounded-xl card-hover transition-all duration-300">
+          <h3 class="text-xl font-semibold mb-2" data-i18n="about.card2.title">Design</h3>
+          <p class="text-muted text-sm" data-i18n="about.card2.desc">Interfaces bonitas e funcionais que encantam</p>
+        </div>
+        <div class="p-6 bg-card border border-border rounded-xl card-hover transition-all duration-300">
+          <h3 class="text-xl font-semibold mb-2" data-i18n="about.card3.title">Performance</h3>
+          <p class="text-muted text-sm" data-i18n="about.card3.desc">Sites rápidos e otimizados para SEO</p>
+        </div>
+        <div class="p-6 bg-card border border-border rounded-xl card-hover transition-all duration-300">
+          <h3 class="text-xl font-semibold mb-2" data-i18n="about.card4.title">Colaboração</h3>
+          <p class="text-muted text-sm" data-i18n="about.card4.desc">Trabalho em equipe e comunicação clara</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="habilidades" class="py-24 md:py-32 bg-gradient-blue fade-in">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6">
+            <span data-i18n="skills.title">Minhas</span> <span class="text-primary" data-i18n="skills.titleHighlight">Habilidades</span>
+          </h2>
+          <p class="text-xl text-muted" data-i18n="skills.description">Tecnologias e ferramentas que domino</p>
+        </div>
+        <div class="flex justify-center gap-4 mb-12">
+          <button class="skill-tab px-6 py-3 rounded-lg font-medium transition-all bg-primary text-background glow-blue hover-target" data-tab="development" data-i18n="skills.tab.dev">
+            Desenvolvimento
+          </button>
+          <button class="skill-tab px-6 py-3 rounded-lg font-medium transition-all bg-card text-muted hover:text-foreground hover-target" data-tab="design" data-i18n="skills.tab.design">
+            Design
+          </button>
+        </div>
+        <div class="p-8 bg-card border border-border rounded-xl">
+          <!-- Development Skills -->
+          <div id="skills-development" class="space-y-6">
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">Frontend (HTML, CSS, JavaScript, React, Next.js, Tailwind CSS, Responsive UI, Accessibility)</span>
+                <span class="text-sm text-muted">92%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="92%"></div>
+              </div>
+            </div>
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">Backend (Python - Django, Flask, FastAPI, REST APIs, Authentication, Integrations, C fundamentals)</span>
+                <span class="text-sm text-muted">85%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="85%"></div>
+              </div>
+            </div>
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">Data & Database (PostgreSQL, MySQL, SQLite, SQL, Data modeling, Migrations, CRUD, Performance tuning)</span>
+                <span class="text-sm text-muted">80%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="80%"></div>
+              </div>
+            </div>
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">Git / GitHub</span>
+                <span class="text-sm text-muted">90%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="90%"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Design Skills -->
+          <div id="skills-design" class="space-y-6 hidden">
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">Figma</span>
+                <span class="text-sm text-muted">95%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="95%"></div>
+              </div>
+            </div>
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">Adobe Photoshop</span>
+                <span class="text-sm text-muted">90%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="90%"></div>
+              </div>
+            </div>
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">Adobe Illustrator</span>
+                <span class="text-sm text-muted">85%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="85%"></div>
+              </div>
+            </div>
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">Canva</span>
+                <span class="text-sm text-muted">95%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="95%"></div>
+              </div>
+            </div>
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">Visual Identity</span>
+                <span class="text-sm text-muted">90%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="90%"></div>
+              </div>
+            </div>
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">Social Media</span>
+                <span class="text-sm text-muted">95%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="95%"></div>
+              </div>
+            </div>
+            <div class="skill-item space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-medium">UI/UX Design</span>
+                <span class="text-sm text-muted">88%</span>
+              </div>
+              <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="skill-bar h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 0%" data-width="88%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projetos" class="py-24 md:py-32 fade-in">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+          <span data-i18n="projects.title">Meus</span> <span class="text-primary" data-i18n="projects.titleHighlight">Projetos</span>
+        </h2>
+        <p class="text-xl text-muted" data-i18n="projects.description">Trabalhos de desenvolvimento que realizei</p>
+      </div>
+      
+      <div class="flex justify-center gap-4 mb-12">
+        <button class="filter-btn px-4 py-2 rounded-lg font-medium transition-all bg-primary text-background hover-target" data-filter="all" data-i18n="projects.filter.all">
+          Todos
+        </button>
+        <button class="filter-btn px-4 py-2 rounded-lg font-medium transition-all bg-card text-muted hover:text-foreground hover-target" data-filter="web">
+          Web
+        </button>
+        <button class="filter-btn px-4 py-2 rounded-lg font-medium transition-all bg-card text-muted hover:text-foreground hover-target" data-filter="mobile">
+          Mobile
+        </button>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Project 1 -->
+        <div class="project-card group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300" data-category="web">
+          <div class="relative h-48 overflow-hidden">
+            <img src="/ecommerce-dark-tech-cyan.jpg" alt="E-Commerce Platform" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">E-Commerce Platform</h3>
+            <p class="text-muted text-sm mb-4">Full-stack e-commerce platform with integrated payments</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Next.js</span>
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">TypeScript</span>
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Stripe</span>
+            </div>
+            <div class="flex gap-4">
+              <a href="https://github.com/licyafreoli/ecommerce" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target" data-i18n="projects.btn.code">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                Código
+              </a>
+              <a href="https://ecommerce-demo.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors hover-target">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                Demo
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Project 2 -->
+        <div class="project-card group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300" data-category="web">
+          <div class="relative h-48 overflow-hidden">
+            <img src="/analytics-dashboard-dark-cyan.jpg" alt="Analytics Dashboard" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Analytics Dashboard</h3>
+            <p class="text-muted text-sm mb-4">Real-time data analytics dashboard</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">React</span>
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">D3.js</span>
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Node.js</span>
+            </div>
+            <div class="flex gap-4">
+              <a href="https://github.com/licyafreoli/dashboard" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target" data-i18n="projects.btn.code">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                Código
+              </a>
+              <a href="https://dashboard-demo.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors hover-target">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                Demo
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Project 3 -->
+        <div class="project-card group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300" data-category="mobile">
+          <div class="relative h-48 overflow-hidden">
+            <img src="/fitness-app-mobile-dark-cyan.jpg" alt="Fitness Mobile App" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Fitness Mobile App</h3>
+            <p class="text-muted text-sm mb-4">Mobile app for workout tracking</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">React Native</span>
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Firebase</span>
+            </div>
+            <div class="flex gap-4">
+              <a href="https://github.com/licyafreoli/fitness-app" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target" data-i18n="projects.btn.code">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                Código
+              </a>
+              <a href="https://fitness-demo.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors hover-target">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                Demo
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Project 4 -->
+        <div class="project-card group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300" data-category="web">
+          <div class="relative h-48 overflow-hidden">
+            <img src="/saas-landing-page-dark-modern-cyan.jpg" alt="SaaS Landing Page" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">SaaS Landing Page</h3>
+            <p class="text-muted text-sm mb-4">Modern landing page for SaaS product</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Next.js</span>
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Tailwind</span>
+              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Framer Motion</span>
+            </div>
+            <div class="flex gap-4">
+              <a href="https://github.com/licyafreoli/saas-landing" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target" data-i18n="projects.btn.code">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                Código
+              </a>
+              <a href="https://saas-demo.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors hover-target">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                Demo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design Work Section -->
+  <section id="design" class="py-24 md:py-32 bg-gradient-blue fade-in">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+          <span data-i18n="design.title">Trabalhos de</span> <span class="text-primary" data-i18n="design.titleHighlight">Design</span>
+        </h2>
+        <p class="text-xl text-muted" data-i18n="design.description">Projetos criativos de identidade visual e social media</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Design Work 1 -->
+        <div class="group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300">
+          <div class="relative h-48 overflow-hidden">
+            <img src="/beauty-salon-instagram-social-media-elegant-pink-g.jpg" alt="Aurora Estúdio de Beleza" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute top-4 right-4">
+              <span class="px-3 py-1 bg-background/80 text-cyan-400 text-xs rounded-full">Social Media</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Aurora Estúdio de Beleza</h3>
+            <p class="text-muted text-sm mb-4">Social media content and visual identity for beauty studio</p>
+            <a href="https://instagram.com/auroraestudiodebeleza" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+              Instagram
+            </a>
+          </div>
+        </div>
+        
+        <!-- Design Work 2 -->
+        <div class="group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300">
+          <div class="relative h-48 overflow-hidden">
+            <img src="/trademark-patent-office-professional-blue-corporat.jpg" alt="Reis Marcas e Patentes" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute top-4 right-4">
+              <span class="px-3 py-1 bg-background/80 text-cyan-400 text-xs rounded-full">Social Media</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Reis Marcas e Patentes</h3>
+            <p class="text-muted text-sm mb-4">Professional branding and social media for trademark office</p>
+            <a href="https://instagram.com/reismarcasepatentes" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+              Instagram
+            </a>
+          </div>
+        </div>
+        
+        <!-- Design Work 3 -->
+        <div class="group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300">
+          <div class="relative h-48 overflow-hidden">
+            <img src="/hair-extension-salon-luxury-instagram-social-media.jpg" alt="Meta Hair Clinic" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute top-4 right-4">
+              <span class="px-3 py-1 bg-background/80 text-cyan-400 text-xs rounded-full">Social Media</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Meta Hair Clinic</h3>
+            <p class="text-muted text-sm mb-4">Visual content and social media for hair extension clinic</p>
+            <a href="https://instagram.com/metahairclinic" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+              Instagram
+            </a>
+          </div>
+        </div>
+        
+        <!-- Design Work 4 -->
+        <div class="group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300">
+          <div class="relative h-48 overflow-hidden">
+            <img src="/tech-startup-branding-dark-cyan.jpg" alt="Tech Startup Branding" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute top-4 right-4">
+              <span class="px-3 py-1 bg-background/80 text-cyan-400 text-xs rounded-full">Visual Identity</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Tech Startup Branding</h3>
+            <p class="text-muted text-sm mb-4">Complete branding including logo, color palette and style guide</p>
+          </div>
+        </div>
+        
+        <!-- Design Work 5 -->
+        <div class="group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300">
+          <div class="relative h-48 overflow-hidden">
+            <img src="/digital-agency-branding-dark-cyan.jpg" alt="Digital Agency Branding" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute top-4 right-4">
+              <span class="px-3 py-1 bg-background/80 text-cyan-400 text-xs rounded-full">Visual Identity</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Digital Agency Branding</h3>
+            <p class="text-muted text-sm mb-4">Complete visual identity and institutional material</p>
+          </div>
+        </div>
+        
+        <!-- Design Work 6 -->
+        <div class="group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300">
+          <div class="relative h-48 overflow-hidden">
+            <img src="/ecommerce-social-media-dark-cyan.jpg" alt="E-commerce Campaigns" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <div class="absolute top-4 right-4">
+              <span class="px-3 py-1 bg-background/80 text-cyan-400 text-xs rounded-full">Social Media</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">E-commerce Campaigns</h3>
+            <p class="text-muted text-sm mb-4">Visual campaigns for product launches</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contato" class="py-24 md:py-32 bg-gradient-blue fade-in">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+          <span data-i18n="contact.title">Entre em</span> <span class="text-primary" data-i18n="contact.titleHighlight">Contato</span>
+        </h2>
+        <p class="text-xl text-muted" data-i18n="contact.description">Vamos trabalhar juntos no seu próximo projeto</p>
+      </div>
+      
+      <div class="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+        <!-- Contact Info -->
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-xl font-semibold mb-6" data-i18n="contact.info.title">Informações de Contato</h3>
+            <div class="space-y-4">
+              <a href="mailto:r.licyaoliveira@gmail.com" class="flex items-center gap-4 text-muted hover:text-primary transition-colors hover-target">
+                <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm text-muted">Email</p>
+                  <p class="font-medium text-foreground">r.licyaoliveira@gmail.com</p>
+                </div>
+              </a>
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm text-muted" data-i18n="contact.info.phone">Telefone</p>
+                  <p class="font-medium">+55 85 986067525</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm text-muted" data-i18n="contact.info.location">Localização</p>
+                  <p class="font-medium">Ceará, Brasil</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-6 bg-card border border-border rounded-xl">
+            <h4 class="font-semibold mb-2" data-i18n="contact.available.title">Disponível para Projetos</h4>
+            <p class="text-muted text-sm" data-i18n="contact.available.desc">Estou aberta a novas oportunidades e projetos interessantes.</p>
+          </div>
+        </div>
+        
+        <!-- Contact Form with success message -->
+        <form id="contactForm" class="space-y-6">
+          <!-- Success Message (hidden by default) -->
+          <div id="successMessage" class="hidden success-message p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
+            <div class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <p class="text-green-400 font-medium" data-i18n="contact.form.success">Mensagem enviada com sucesso!</p>
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2" data-i18n="contact.form.name">Nome</label>
+            <input type="text" id="formName" class="w-full px-4 py-3 bg-card border border-border rounded-lg focus:border-primary focus:outline-none transition-colors" data-i18n-placeholder="contact.form.namePlaceholder" placeholder="Seu nome" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Email</label>
+            <input type="email" id="formEmail" class="w-full px-4 py-3 bg-card border border-border rounded-lg focus:border-primary focus:outline-none transition-colors" data-i18n-placeholder="contact.form.emailPlaceholder" placeholder="seu@email.com" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2" data-i18n="contact.form.message">Mensagem</label>
+            <textarea rows="5" id="formMessage" class="w-full px-4 py-3 bg-card border border-border rounded-lg focus:border-primary focus:outline-none transition-colors resize-none" data-i18n-placeholder="contact.form.messagePlaceholder" placeholder="Sua mensagem..." required></textarea>
+          </div>
+          <button type="submit" class="w-full px-8 py-4 bg-primary text-background rounded-lg font-medium hover:opacity-90 transition-all glow-blue hover-target" data-i18n="contact.form.send">
+            Enviar Mensagem
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 border-t border-border">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-muted text-sm">© 2025 Lícya Oliveira. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+        <div class="flex items-center gap-6">
+          <a href="https://github.com/licyafreoli" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-primary transition-colors hover-target">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+          </a>
+          <a href="https://linkedin.com/in/licyaoliveira" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-primary transition-colors hover-target">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+          <a href="https://instagram.com/licyafreoli" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-primary transition-colors hover-target">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Translations with success message
+    const translations = {
+      pt: {
+        "nav.home": "Início",
+        "nav.about": "Sobre",
+        "nav.skills": "Habilidades",
+        "nav.projects": "Projetos",
+        "nav.design": "Design",
+        "nav.contact": "Contato",
+        "hero.badge": "Desenvolvedora & Designer",
+        "hero.greeting": "Criando",
+        "hero.highlight": "experiências digitais únicas",
+        "hero.description": "Sou Lícya Oliveira. Desenvolvedora full stack e designer especializada em identidade visual e social media. Transformando ideias em produtos digitais extraordinários.",
+        "hero.cta.projects": "Ver Projetos",
+        "hero.cta.contact": "Entre em Contato",
+        "about.title": "Sobre",
+        "about.titleHighlight": "Mim",
+        "about.description": "Há mais de 5 anos ajudo marcas a se posicionarem: construo sua identidade visual para que sua marca reflita seus valores, faço seu site para que ele venda por você, e administro redes sociais que aproximam seu público do seu negócio.",
+        "about.card1.title": "Desenvolvimento",
+        "about.card1.desc": "Código limpo e performático",
+        "about.card2.title": "Design",
+        "about.card2.desc": "Interfaces bonitas e funcionais que encantam",
+        "about.card3.title": "Performance",
+        "about.card3.desc": "Sites rápidos e otimizados para SEO",
+        "about.card4.title": "Colaboração",
+        "about.card4.desc": "Trabalho em equipe e comunicação clara",
+        "skills.title": "Minhas",
+        "skills.titleHighlight": "Habilidades",
+        "skills.description": "Tecnologias e ferramentas que domino",
+        "skills.tab.dev": "Desenvolvimento",
+        "skills.tab.design": "Design",
+        "projects.title": "Meus",
+        "projects.titleHighlight": "Projetos",
+        "projects.description": "Trabalhos de desenvolvimento que realizei",
+        "projects.filter.all": "Todos",
+        "projects.btn.code": "Código",
+        "design.title": "Trabalhos de",
+        "design.titleHighlight": "Design",
+        "design.description": "Projetos criativos de identidade visual e social media",
+        "contact.title": "Entre em",
+        "contact.titleHighlight": "Contato",
+        "contact.description": "Vamos trabalhar juntos no seu próximo projeto",
+        "contact.info.title": "Informações de Contato",
+        "contact.info.phone": "Telefone",
+        "contact.info.location": "Localização",
+        "contact.available.title": "Disponível para Projetos",
+        "contact.available.desc": "Estou aberta a novas oportunidades e projetos interessantes.",
+        "contact.form.name": "Nome",
+        "contact.form.namePlaceholder": "Seu nome",
+        "contact.form.emailPlaceholder": "seu@email.com",
+        "contact.form.message": "Mensagem",
+        "contact.form.messagePlaceholder": "Sua mensagem...",
+        "contact.form.send": "Enviar Mensagem",
+        "contact.form.success": "Mensagem enviada com sucesso!",
+        "footer.rights": "Todos os direitos reservados."
+      },
+      en: {
+        "nav.home": "Home",
+        "nav.about": "About",
+        "nav.skills": "Skills",
+        "nav.projects": "Projects",
+        "nav.design": "Design",
+        "nav.contact": "Contact",
+        "hero.badge": "Developer & Designer",
+        "hero.greeting": "Creating",
+        "hero.highlight": "unique digital experiences",
+        "hero.description": "I'm Lícya Oliveira. Full-stack developer and designer specialized in visual identity and social media. Transforming ideas into extraordinary digital products.",
+        "hero.cta.projects": "View Projects",
+        "hero.cta.contact": "Get in Touch",
+        "about.title": "About",
+        "about.titleHighlight": "Me",
+        "about.description": "For over 5 years, I've helped brands position themselves: I build your visual identity so your brand reflects your values, develop your website so it sells for you, and manage social media to bring your audience closer to your business.",
+        "about.card1.title": "Development",
+        "about.card1.desc": "Clean and performant code",
+        "about.card2.title": "Design",
+        "about.card2.desc": "Beautiful and functional interfaces",
+        "about.card3.title": "Performance",
+        "about.card3.desc": "Fast and SEO optimized sites",
+        "about.card4.title": "Collaboration",
+        "about.card4.desc": "Teamwork and clear communication",
+        "skills.title": "My",
+        "skills.titleHighlight": "Skills",
+        "skills.description": "Technologies and tools I master",
+        "skills.tab.dev": "Development",
+        "skills.tab.design": "Design",
+        "projects.title": "My",
+        "projects.titleHighlight": "Projects",
+        "projects.description": "Development work I've done",
+        "projects.filter.all": "All",
+        "projects.btn.code": "Code",
+        "design.title": "Design",
+        "design.titleHighlight": "Work",
+        "design.description": "Creative visual identity and social media projects",
+        "contact.title": "Get in",
+        "contact.titleHighlight": "Touch",
+        "contact.description": "Let's work together on your next project",
+        "contact.info.title": "Contact Information",
+        "contact.info.phone": "Phone",
+        "contact.info.location": "Location",
+        "contact.available.title": "Available for Projects",
+        "contact.available.desc": "I'm open to new opportunities and interesting projects.",
+        "contact.form.name": "Name",
+        "contact.form.namePlaceholder": "Your name",
+        "contact.form.emailPlaceholder": "your@email.com",
+        "contact.form.message": "Message",
+        "contact.form.messagePlaceholder": "Your message...",
+        "contact.form.send": "Send Message",
+        "contact.form.success": "Message sent successfully!",
+        "footer.rights": "All rights reserved."
+      },
+      es: {
+        "nav.home": "Inicio",
+        "nav.about": "Sobre",
+        "nav.skills": "Habilidades",
+        "nav.projects": "Proyectos",
+        "nav.design": "Diseño",
+        "nav.contact": "Contacto",
+        "hero.badge": "Desarrolladora y Diseñadora",
+        "hero.greeting": "Creando",
+        "hero.highlight": "experiencias digitales únicas",
+        "hero.description": "Soy Lícya Oliveira. Desarrolladora full stack y diseñadora especializada en identidad visual y redes sociales. Transformando ideas en productos digitales extraordinarios.",
+        "hero.cta.projects": "Ver Proyectos",
+        "hero.cta.contact": "Contáctame",
+        "about.title": "Sobre",
+        "about.titleHighlight": "Mí",
+        "about.description": "Durante más de 5 años, he ayudado a las marcas a posicionarse: construyo tu identidad visual para que tu marca refleje tus valores, desarrollo tu sitio web para que venda por ti, y gestiono redes sociales que acercan a tu audiencia a tu negocio.",
+        "about.card1.title": "Desarrollo",
+        "about.card1.desc": "Código limpio y performático",
+        "about.card2.title": "Diseño",
+        "about.card2.desc": "Interfaces bonitas y funcionales",
+        "about.card3.title": "Performance",
+        "about.card3.desc": "Sitios rápidos y optimizados para SEO",
+        "about.card4.title": "Colaboración",
+        "about.card4.desc": "Trabajo en equipo y comunicación clara",
+        "skills.title": "Mis",
+        "skills.titleHighlight": "Habilidades",
+        "skills.description": "Tecnologías y herramientas que domino",
+        "skills.tab.dev": "Desarrollo",
+        "skills.tab.design": "Diseño",
+        "projects.title": "Mis",
+        "projects.titleHighlight": "Proyectos",
+        "projects.description": "Trabajos de desarrollo que realicé",
+        "projects.filter.all": "Todos",
+        "projects.btn.code": "Código",
+        "design.title": "Trabajos de",
+        "design.titleHighlight": "Diseño",
+        "design.description": "Proyectos creativos de identidad visual y social media",
+        "contact.title": "Ponte en",
+        "contact.titleHighlight": "Contacto",
+        "contact.description": "Trabajemos juntos en tu próximo proyecto",
+        "contact.info.title": "Información de Contacto",
+        "contact.info.phone": "Teléfono",
+        "contact.info.location": "Ubicación",
+        "contact.available.title": "Disponible para Proyectos",
+        "contact.available.desc": "Estoy abierta a nuevas oportunidades y proyectos interesantes.",
+        "contact.form.name": "Nombre",
+        "contact.form.namePlaceholder": "Tu nombre",
+        "contact.form.emailPlaceholder": "tu@email.com",
+        "contact.form.message": "Mensaje",
+        "contact.form.messagePlaceholder": "Tu mensaje...",
+        "contact.form.send": "Enviar Mensaje",
+        "contact.form.success": "¡Mensaje enviado con éxito!",
+        "footer.rights": "Todos los derechos reservados."
+      },
+      fr: {
+        "nav.home": "Accueil",
+        "nav.about": "À propos",
+        "nav.skills": "Compétences",
+        "nav.projects": "Projets",
+        "nav.design": "Design",
+        "nav.contact": "Contact",
+        "hero.badge": "Développeuse & Designer",
+        "hero.greeting": "Créer des",
+        "hero.highlight": "expériences digitales uniques",
+        "hero.description": "Je suis Lícya Oliveira. Développeuse full stack et designer spécialisée en identité visuelle et réseaux sociaux. Transformer les idées en produits digitaux extraordinaires.",
+        "hero.cta.projects": "Voir Projets",
+        "hero.cta.contact": "Me Contacter",
+        "about.title": "À propos de",
+        "about.titleHighlight": "Moi",
+        "about.description": "Depuis plus de 5 ans, j'aide les marques à se positionner: je construis votre identité visuelle pour que votre marque reflète vos valeurs, je développe votre site web pour qu'il vende pour vous, et je gère les réseaux sociaux qui rapprochent votre audience de votre entreprise.",
+        "about.card1.title": "Développement",
+        "about.card1.desc": "Code propre et performant",
+        "about.card2.title": "Design",
+        "about.card2.desc": "Interfaces belles et fonctionnelles",
+        "about.card3.title": "Performance",
+        "about.card3.desc": "Sites rapides et optimisés pour le SEO",
+        "about.card4.title": "Collaboration",
+        "about.card4.desc": "Travail d'équipe et communication claire",
+        "skills.title": "Mes",
+        "skills.titleHighlight": "Compétences",
+        "skills.description": "Technologies et outils que je maîtrise",
+        "skills.tab.dev": "Développement",
+        "skills.tab.design": "Design",
+        "projects.title": "Mes",
+        "projects.titleHighlight": "Projets",
+        "projects.description": "Travaux de développement",
+        "projects.filter.all": "Tous",
+        "projects.btn.code": "Code",
+        "design.title": "Travaux de",
+        "design.titleHighlight": "Design",
+        "design.description": "Projets créatifs d'identité visuelle et de réseaux sociaux",
+        "contact.title": "Entrer en",
+        "contact.titleHighlight": "Contact",
+        "contact.description": "Travaillons ensemble sur votre prochain projet",
+        "contact.info.title": "Informations de Contact",
+        "contact.info.phone": "Téléphone",
+        "contact.info.location": "Localisation",
+        "contact.available.title": "Disponible pour Projets",
+        "contact.available.desc": "Je suis ouverte aux nouvelles opportunités et aux projets intéressants.",
+        "contact.form.name": "Nom",
+        "contact.form.namePlaceholder": "Votre nom",
+        "contact.form.emailPlaceholder": "votre@email.com",
+        "contact.form.message": "Message",
+        "contact.form.messagePlaceholder": "Votre message...",
+        "contact.form.send": "Envoyer Message",
+        "contact.form.success": "Message envoyé avec succès !",
+        "footer.rights": "Tous droits réservés."
+      },
+      it: {
+        "nav.home": "Home",
+        "nav.about": "Chi sono",
+        "nav.skills": "Competenze",
+        "nav.projects": "Progetti",
+        "nav.design": "Design",
+        "nav.contact": "Contatti",
+        "hero.badge": "Sviluppatrice & Designer",
+        "hero.greeting": "Creare",
+        "hero.highlight": "esperienze digitali uniche",
+        "hero.description": "Sono Lícya Oliveira. Sviluppatrice full stack e designer specializzata in identità visiva e social media. Trasformare le idee in prodotti digitali straordinari.",
+        "hero.cta.projects": "Vedi Progetti",
+        "hero.cta.contact": "Contattami",
+        "about.title": "Chi",
+        "about.titleHighlight": "Sono",
+        "about.description": "Da oltre 5 anni aiuto i brand a posizionarsi: costruisco la tua identità visiva affinché il tuo marchio rifletta i tuoi valori, sviluppo il tuo sito web affinché venda per te, e gestisco i social media che avvicinano il tuo pubblico alla tua attività.",
+        "about.card1.title": "Sviluppo",
+        "about.card1.desc": "Codice pulito e performante",
+        "about.card2.title": "Design",
+        "about.card2.desc": "Interfacce belle e funzionali",
+        "about.card3.title": "Performance",
+        "about.card3.desc": "Siti veloci e ottimizzati per il SEO",
+        "about.card4.title": "Collaborazione",
+        "about.card4.desc": "Lavoro di squadra e comunicazione chiara",
+        "skills.title": "Le mie",
+        "skills.titleHighlight": "Competenze",
+        "skills.description": "Tecnologie e strumenti che padroneggio",
+        "skills.tab.dev": "Sviluppo",
+        "skills.tab.design": "Design",
+        "projects.title": "I miei",
+        "projects.titleHighlight": "Progetti",
+        "projects.description": "Lavori di sviluppo che ho realizzato",
+        "projects.filter.all": "Tutti",
+        "projects.btn.code": "Codice",
+        "design.title": "Lavori di",
+        "design.titleHighlight": "Design",
+        "design.description": "Progetti creativi di identità visiva e social media",
+        "contact.title": "Mettiti in",
+        "contact.titleHighlight": "Contatto",
+        "contact.description": "Lavoriamo insieme al tuo prossimo progetto",
+        "contact.info.title": "Informazioni di Contatto",
+        "contact.info.phone": "Telefono",
+        "contact.info.location": "Posizione",
+        "contact.available.title": "Disponibile per Progetti",
+        "contact.available.desc": "Sono aperta a nuove opportunità e progetti interessanti.",
+        "contact.form.name": "Nome",
+        "contact.form.namePlaceholder": "Il tuo nome",
+        "contact.form.emailPlaceholder": "tua@email.com",
+        "contact.form.message": "Messaggio",
+        "contact.form.messagePlaceholder": "Il tuo messaggio...",
+        "contact.form.send": "Invia Messaggio",
+        "contact.form.success": "Messaggio inviato con successo!",
+        "footer.rights": "Tutti i diritti riservati."
+      }
+    };
+
+    // Language data with country codes
+    const languageData = {
+      pt: { code: "BR", name: "Português" },
+      en: { code: "US", name: "English" },
+      es: { code: "ES", name: "Español" },
+      fr: { code: "FR", name: "Français" },
+      it: { code: "IT", name: "Italiano" }
+    };
+
+    let currentLang = 'pt';
+
+    // Language switching
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.getElementById('currentLang').textContent = languageData[lang].code;
+      
+      // Update language options highlighting
+      document.querySelectorAll('.lang-option').forEach(opt => {
+        const optLang = opt.dataset.lang;
+        const codeSpan = opt.querySelector('span:first-child');
+        if (optLang === lang) {
+          codeSpan.classList.remove('text-muted');
+          codeSpan.classList.add('text-primary');
+        } else {
+          codeSpan.classList.remove('text-primary');
+          codeSpan.classList.add('text-muted');
+        }
+      });
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang] && translations[lang][key]) {
+          el.placeholder = translations[lang][key];
+        }
+      });
+    }
+
+    // Language menu
+    document.getElementById('langBtn').addEventListener('click', () => {
+      document.getElementById('langMenu').classList.toggle('hidden');
+    });
+
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setLanguage(btn.dataset.lang);
+        document.getElementById('langMenu').classList.add('hidden');
+      });
+    });
+
+    // Close language menu on click outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#langBtn') && !e.target.closest('#langMenu')) {
+        document.getElementById('langMenu').classList.add('hidden');
+      }
+    });
+
+    // Mobile menu
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+
+    // Skill tabs
+    document.querySelectorAll('.skill-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.skill-tab').forEach(t => {
+          t.classList.remove('bg-primary', 'text-background', 'glow-blue');
+          t.classList.add('bg-card', 'text-muted');
+        });
+        tab.classList.remove('bg-card', 'text-muted');
+        tab.classList.add('bg-primary', 'text-background', 'glow-blue');
+        
+        const tabName = tab.dataset.tab;
+        document.getElementById('skills-development').classList.toggle('hidden', tabName !== 'development');
+        document.getElementById('skills-design').classList.toggle('hidden', tabName !== 'design');
+        
+        animateSkillBars();
+      });
+    });
+
+    // Project filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('bg-primary', 'text-background');
+          b.classList.add('bg-card', 'text-muted');
+        });
+        btn.classList.remove('bg-card', 'text-muted');
+        btn.classList.add('bg-primary', 'text-background');
+        
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.project-card').forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Animate skill bars
+    function animateSkillBars() {
+      document.querySelectorAll('.skill-bar').forEach(bar => {
+        const width = bar.dataset.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+          bar.style.width = width;
+        }, 100);
+      });
+    }
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.id === 'habilidades') {
+            animateSkillBars();
+          }
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('mobileMenu').classList.add('hidden');
+        }
+      });
+    });
+
+    // Contact form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Show success message
+      const successMsg = document.getElementById('successMessage');
+      successMsg.classList.remove('hidden');
+      
+      // Clear form fields
+      document.getElementById('formName').value = '';
+      document.getElementById('formEmail').value = '';
+      document.getElementById('formMessage').value = '';
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        successMsg.classList.add('hidden');
+      }, 5000);
+    });
+
+    // Custom Cursor
+    const cursorDot = document.getElementById('cursorDot');
+    const cursorRing = document.getElementById('cursorRing');
+    const cursorGlow = document.getElementById('cursorGlow');
+
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // Move dot immediately
+      cursorDot.style.left = (mouseX - 4) + 'px';
+      cursorDot.style.top = (mouseY - 4) + 'px';
+      
+      // Move glow immediately
+      cursorGlow.style.left = mouseX + 'px';
+      cursorGlow.style.top = mouseY + 'px';
+    });
+
+    // Animate ring with smooth follow
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      
+      cursorRing.style.left = (ringX - 20) + 'px';
+      cursorRing.style.top = (ringY - 20) + 'px';
+      
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // Cursor hover effect on interactive elements
+    document.querySelectorAll('.hover-target, a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        document.body.classList.remove('cursor-hover');
+      });
+    });
+
+    // Initial animation
+    setTimeout(() => {
+      animateSkillBars();
+    }, 500);
+
+    // Local Storage Analytics (kept for reference, not for Google Sheets tracking)
+    function trackVisitor() {
+      const visitorData = {
+        timestamp: new Date().toISOString(),
+        page: window.location.href,
+        referrer: document.referrer || 'direct',
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        screenWidth: window.screen.width,
+        screenHeight: window.screen.height,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      };
+
+      // Get existing visitors from localStorage
+      let visitors = JSON.parse(localStorage.getItem('site_visitors') || '[]');
+      
+      // Add new visitor
+      visitors.push(visitorData);
+      
+      // Keep only last 100 visits
+      if (visitors.length > 100) {
+        visitors = visitors.slice(-100);
+      }
+      
+      // Save to localStorage
+      localStorage.setItem('site_visitors', JSON.stringify(visitors));
+      
+      // Log to console for debugging
+      console.log('[Visitor Tracked]', visitorData);
+    }
+    
+    function trackPageView(section) {
+      const pageView = {
+        timestamp: new Date().toISOString(),
+        section: section
+      };
+      
+      let pageViews = JSON.parse(localStorage.getItem('page_views') || '[]');
+      pageViews.push(pageView);
+      
+      if (pageViews.length > 500) {
+        pageViews = pageViews.slice(-500);
+      }
+      
+      localStorage.setItem('page_views', JSON.stringify(pageViews));
+    }
+    
+    function getVisitorStats() {
+      const visitors = JSON.parse(localStorage.getItem('site_visitors') || '[]');
+      const pageViews = JSON.parse(localStorage.getItem('page_views') || '[]');
+      
+      return {
+        totalVisits: visitors.length,
+        totalPageViews: pageViews.length,
+        visitors: visitors,
+        pageViews: pageViews
+      };
+    }
+    
+    // Track on page load
+    trackVisitor();
+    
+    const sectionsToTrack = document.querySelectorAll('section[id]');
+    const trackingObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          trackPageView(entry.target.id);
+        }
+      });
+    }, { threshold: 0.5 });
+    
+    sectionsToTrack.forEach(section => {
+      trackingObserver.observe(section);
+    });
+    
+    // Expose stats function to console
+    window.getVisitorStats = getVisitorStats;
+    console.log('[Analytics] Para ver estatísticas de visitantes (localStorage), digite: getVisitorStats()');
+
+    // ==================================================
+    // GOOGLE SHEETS TRACKING SYSTEM
+    // ==================================================
+    
+    const TRACKING_CONFIG = {
+      webAppUrl: 'https://script.google.com/macros/s/AKfycbxOcEFd28jVmxrRxCuwOt_616a2hW37ESbV_PJg_eQn6t0vskdDOeZNxohgLpB3EhWv/exec',
+      token: 'portfolio_track_2026_xyz789abc' // Use o mesmo token no Code.gs
+    };
+    
+    // Função para obter ou criar Session ID
+    function getSessionId() {
+      let sessionId = sessionStorage.getItem('tracking_session_id');
+      if (!sessionId) {
+        sessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        sessionStorage.setItem('tracking_session_id', sessionId);
+      }
+      return sessionId;
+    }
+    
+    async function getLocation() {
+      // Lista de APIs de geolocalização gratuitas (fallback)
+      const apis = [
+        {
+          url: 'https://ipapi.co/json/',
+          parse: (data) => ({ country: data.country_name || '', region: data.region || '' })
+        },
+        {
+          url: 'https://ipwho.is/',
+          parse: (data) => ({ country: data.country || '', region: data.region || '' })
+        },
+        {
+          url: 'https://ip-api.com/json/?fields=country,regionName',
+          parse: (data) => ({ country: data.country || '', region: data.regionName || '' })
+        }
+      ];
+      
+      for (const api of apis) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 3000);
+          
+          const response = await fetch(api.url, { 
+            signal: controller.signal,
+            mode: 'cors'
+          });
+          clearTimeout(timeoutId);
+          
+          if (!response.ok) continue;
+          
+          const data = await response.json();
+          const location = api.parse(data);
+          
+          if (location.country) {
+            console.log('[Tracking] Localização obtida:', location);
+            return location;
+          }
+        } catch (error) {
+          console.log('[Tracking] API falhou, tentando próxima...', error.message);
+          continue;
+        }
+      }
+      
+      console.log('[Tracking] Não foi possível obter localização de nenhuma API');
+      return { country: '', region: '' };
+    }
+    
+    async function trackToGoogleSheets() {
+      // Não rastreia se a URL do Web App não foi configurada
+      if (TRACKING_CONFIG.webAppUrl === 'COLE_AQUI_A_URL_DO_SEU_WEB_APP') {
+        console.log('[Tracking] ⚠️ Configure a URL do Web App em TRACKING_CONFIG.webAppUrl');
+        console.log('[Tracking] Siga as instruções de deploy do Google Apps Script');
+        return;
+      }
+      
+      // Não rastreia se o token não foi configurado
+      if (TRACKING_CONFIG.token === 'SEU_TOKEN_SECRETO_AQUI') {
+        console.log('[Tracking] ⚠️ Configure o token em TRACKING_CONFIG.token');
+        return;
+      }
+      
+      try {
+        console.log('[Tracking] Iniciando rastreamento...');
+        
+        // Busca localização
+        const location = await getLocation();
+        
+        // Monta o payload
+        const payload = {
+          token: TRACKING_CONFIG.token,
+          timestamp: new Date().toISOString(),
+          sessionId: getSessionId(),
+          page: window.location.href,
+          referrer: document.referrer || 'direct',
+          language: navigator.language || '',
+          screen: window.screen.width + 'x' + window.screen.height,
+          country: location.country,
+          region: location.region,
+          userAgent: navigator.userAgent
+        };
+        
+        console.log('[Tracking] Payload:', payload);
+        
+        // Google Apps Script Web Apps funcionam melhor com redirect mode
+        const response = await fetch(TRACKING_CONFIG.webAppUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain'
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        console.log('[Tracking] ✓ Requisição enviada ao Google Sheets');
+        
+      } catch (error) {
+        console.error('[Tracking] ✗ Erro ao registrar visita:', error);
+      }
+    }
+    
+    // Executa o tracking ao carregar a página
+    trackToGoogleSheets();
+
+  </script>
+</body>
+</html>
