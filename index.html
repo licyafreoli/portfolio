@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -105,9 +106,140 @@
       transform: translateY(-2px);
     }
 
+    .projects-filter {
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 0.25rem;
+    }
+    .projects-filter::-webkit-scrollbar { display: none; }
+
+    .project-card {
+      min-width: 0;
+      height: 100%;
+    }
+
+    .project-card-link {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .project-card-link:focus-visible {
+      outline: 3px solid rgba(34, 211, 238, 0.9);
+      outline-offset: 4px;
+      border-radius: 0.75rem;
+    }
+
+    .project-preview {
+      position: relative;
+      height: 14rem;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .project-preview::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+
+    .project-preview-reis {
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(215, 146, 22, 0.22), transparent 34%),
+        linear-gradient(135deg, #171717, #0c0c0f 70%);
+    }
+
+    .project-preview-reis-alt {
+      background:
+        radial-gradient(circle at 20% 85%, rgba(6, 182, 212, 0.22), transparent 38%),
+        linear-gradient(135deg, #10161c, #090b0f 72%);
+    }
+
+    .project-preview-logo {
+      width: min(100%, 27rem);
+      max-height: 7.5rem;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
+      transition: transform 0.5s ease, opacity 0.3s ease;
+    }
+
+    .project-preview-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .project-preview-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10, 10, 15, 0.85), rgba(10, 10, 15, 0.08) 62%);
+    }
+
+    .project-preview-label {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.7rem;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      background: rgba(10, 10, 15, 0.72);
+      color: #e4e4e7;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      backdrop-filter: blur(10px);
+    }
+
+    .project-card-link:hover .project-preview-photo,
+    .project-card-link:hover .project-preview-logo {
+      transform: scale(1.045);
+    }
+
+    .project-card-link:hover .project-preview-logo { opacity: 1; }
+
+    .project-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+
+    .project-cta { margin-top: auto; }
+
+    @media (max-width: 640px) {
+      .project-preview { height: 12rem; }
+      .project-content { padding: 1.25rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-card,
+      .project-preview-photo,
+      .project-preview-logo { transition: none !important; }
+    }
+
     .bg-gradient-blue {
       background: linear-gradient(180deg, rgba(6, 182, 212, 0.03) 0%, transparent 50%);
     }
+
+    section { scroll-margin-top: 4rem; }
 
     .fade-in {
       opacity: 0;
@@ -366,7 +498,7 @@
           </svg>
         </a>
 
-        <a href="https://instagram.com/licyafreoli" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-primary transition-colors hover-target" aria-label="Instagram">
+        <a href="https://instagram.com/freolitech" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-primary transition-colors hover-target" aria-label="Instagram">
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
           </svg>
@@ -560,133 +692,90 @@
         <p class="text-xl text-muted" data-i18n="projects.description">Trabalhos de desenvolvimento que realizei</p>
       </div>
 
-      <div class="flex justify-center gap-4 mb-12">
-        <button class="filter-btn px-4 py-2 rounded-lg font-medium transition-all bg-primary text-background hover-target" data-filter="all" data-i18n="projects.filter.all">
+      <div class="projects-filter flex justify-start sm:justify-center gap-3 mb-12" role="group" aria-label="Filtrar projetos" data-i18n-aria-label="projects.filter.label">
+        <button class="filter-btn shrink-0 px-4 py-2 rounded-lg font-medium transition-all bg-primary text-background hover-target" type="button" data-filter="all" aria-pressed="true" data-i18n="projects.filter.all">
           Todos
         </button>
-        <button class="filter-btn px-4 py-2 rounded-lg font-medium transition-all bg-card text-muted hover:text-foreground hover-target" data-filter="web">
+        <button class="filter-btn shrink-0 px-4 py-2 rounded-lg font-medium transition-all bg-card text-muted hover:text-foreground hover-target" type="button" data-filter="web" aria-pressed="false">
           Web
         </button>
-        <button class="filter-btn px-4 py-2 rounded-lg font-medium transition-all bg-card text-muted hover:text-foreground hover-target" data-filter="mobile">
+        <button class="filter-btn shrink-0 px-4 py-2 rounded-lg font-medium transition-all bg-card text-muted hover:text-foreground hover-target" type="button" data-filter="mobile" aria-pressed="false">
           Mobile
         </button>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-8">
-        <!-- Project 1 -->
-        <div class="project-card group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300" data-category="web">
-          <div class="relative h-48 overflow-hidden zoomable-image" data-lightbox="/ecommerce-dark-tech-cyan.jpg" data-alt="E-Commerce Platform">
-            <img src="/ecommerce-dark-tech-cyan.jpg" alt="E-Commerce Platform" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-            <div class="zoom-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
+        <!-- Reis Project — collaborative repository -->
+        <article class="project-card bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300" data-category="mobile">
+          <a href="https://github.com/vinicius05-lab/ReisProject" target="_blank" rel="noopener noreferrer" class="project-card-link hover-target" aria-label="Abrir Reis Marcas e Patentes no GitHub" data-i18n-aria-label="projects.reis.aria">
+            <div class="project-preview project-preview-reis">
+              <img src="imgs/reis-logo.png" alt="" class="project-preview-logo">
+              <span class="project-preview-label" data-i18n="projects.reis.label">Projeto colaborativo</span>
             </div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-semibold mb-2">E-Commerce Platform</h3>
-            <p class="text-muted text-sm mb-4">Full-stack e-commerce platform with integrated payments</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Next.js</span>
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">TypeScript</span>
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Stripe</span>
+            <div class="project-content">
+              <h3 class="text-xl font-semibold mb-3" data-i18n="projects.reis.title">Reis Marcas e Patentes</h3>
+              <p class="text-muted text-sm leading-relaxed mb-5" data-i18n="projects.reis.desc">Aplicativo multiplataforma para cadastro, autenticação e acompanhamento de processos por clientes, colaboradores e parceiros.</p>
+              <div class="flex flex-wrap gap-2 mb-6" aria-label="Tecnologias" data-i18n-aria-label="projects.tech.label">
+                <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Flutter</span>
+                <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Dart</span>
+                <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Mobile</span>
+              </div>
+              <span class="project-cta inline-flex items-center gap-2 text-sm font-medium text-primary">
+                <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span data-i18n="projects.btn.repository">Ver repositório</span>
+                <span aria-hidden="true">↗</span>
+              </span>
             </div>
-            <div class="flex gap-4">
-              <a href="https://github.com/licyafreoli/ecommerce" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target" data-i18n="projects.btn.code">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                Código
-              </a>
-              <a href="https://ecommerce-demo.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors hover-target">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                Demo
-              </a>
-            </div>
-          </div>
-        </div>
+          </a>
+        </article>
 
-        <!-- Project 2 -->
-        <div class="project-card group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300" data-category="web">
-          <div class="relative h-48 overflow-hidden zoomable-image" data-lightbox="/analytics-dashboard-dark-cyan.jpg" data-alt="Analytics Dashboard">
-            <img src="/analytics-dashboard-dark-cyan.jpg" alt="Analytics Dashboard" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-            <div class="zoom-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+        <!-- CM Pisos — live GitHub Pages project -->
+        <article class="project-card bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300" data-category="web">
+          <a href="https://licyafreoli.github.io/cmpisos/" target="_blank" rel="noopener noreferrer" class="project-card-link hover-target" aria-label="Visitar o site CM Pisos" data-i18n-aria-label="projects.cmpisos.aria">
+            <div class="project-preview">
+              <img src="imgs/cm-pisos-preview.jpg" alt="Ambiente corporativo com piso em carpete" class="project-preview-photo" data-i18n-alt="projects.cmpisos.imageAlt">
+              <div class="project-preview-overlay" aria-hidden="true"></div>
+              <span class="project-preview-label" data-i18n="projects.cmpisos.label">Site publicado</span>
             </div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-semibold mb-2">Analytics Dashboard</h3>
-            <p class="text-muted text-sm mb-4">Real-time data analytics dashboard</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">React</span>
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">D3.js</span>
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Node.js</span>
+            <div class="project-content">
+              <h3 class="text-xl font-semibold mb-3">CM Pisos</h3>
+              <p class="text-muted text-sm leading-relaxed mb-5" data-i18n="projects.cmpisos.desc">Site institucional responsivo com catálogo pesquisável, filtros de produtos, paginação, FAQ e contato comercial integrado.</p>
+              <div class="flex flex-wrap gap-2 mb-6" aria-label="Tecnologias" data-i18n-aria-label="projects.tech.label">
+                <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">HTML5</span>
+                <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">CSS3</span>
+                <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">JavaScript</span>
+              </div>
+              <span class="project-cta inline-flex items-center gap-2 text-sm font-medium text-primary">
+                <svg class="w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                <span data-i18n="projects.btn.visit">Visitar projeto</span>
+              </span>
             </div>
-            <div class="flex gap-4">
-              <a href="https://github.com/licyafreoli/dashboard" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target" data-i18n="projects.btn.code">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                Código
-              </a>
-              <a href="https://dashboard-demo.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors hover-target">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                Demo
-              </a>
-            </div>
-          </div>
-        </div>
+          </a>
+        </article>
 
-        <!-- Project 3 -->
-        <div class="project-card group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300" data-category="mobile">
-          <div class="relative h-48 overflow-hidden zoomable-image" data-lightbox="/fitness-app-mobile-dark-cyan.jpg" data-alt="Fitness Mobile App">
-            <img src="/fitness-app-mobile-dark-cyan.jpg" alt="Fitness Mobile App" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-            <div class="zoom-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+        <!-- Reis Project — consolidated portfolio repository -->
+        <article class="project-card bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300 md:col-span-2 xl:col-span-1" data-category="mobile">
+          <a href="https://github.com/licyafreoli/ReisProject-master" target="_blank" rel="noopener noreferrer" class="project-card-link hover-target" aria-label="Abrir a versão consolidada do Reis Project no GitHub" data-i18n-aria-label="projects.reisCopy.aria">
+            <div class="project-preview project-preview-reis project-preview-reis-alt">
+              <img src="imgs/reis-logo.png" alt="" class="project-preview-logo">
+              <span class="project-preview-label" data-i18n="projects.reisCopy.label">Versão consolidada</span>
             </div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-semibold mb-2">Fitness Mobile App</h3>
-            <p class="text-muted text-sm mb-4">Mobile app for workout tracking</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">React Native</span>
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Firebase</span>
+            <div class="project-content">
+              <h3 class="text-xl font-semibold mb-3" data-i18n="projects.reisCopy.title">Reis Project — Versão consolidada</h3>
+              <p class="text-muted text-sm leading-relaxed mb-5" data-i18n="projects.reisCopy.desc">Entrega consolidada do aplicativo Reis, com fluxos de cadastro, perfil, comunicação e gestão visual de processos.</p>
+              <div class="flex flex-wrap gap-2 mb-6" aria-label="Tecnologias" data-i18n-aria-label="projects.tech.label">
+                <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Flutter</span>
+                <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Dart</span>
+                <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">UI Responsiva</span>
+              </div>
+              <span class="project-cta inline-flex items-center gap-2 text-sm font-medium text-primary">
+                <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span data-i18n="projects.btn.repository">Ver repositório</span>
+                <span aria-hidden="true">↗</span>
+              </span>
             </div>
-            <div class="flex gap-4">
-              <a href="https://github.com/licyafreoli/fitness-app" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target" data-i18n="projects.btn.code">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                Código
-              </a>
-              <a href="https://fitness-demo.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors hover-target">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                Demo
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 4 -->
-        <div class="project-card group bg-card border border-border rounded-xl overflow-hidden card-hover transition-all duration-300" data-category="web">
-          <div class="relative h-48 overflow-hidden zoomable-image" data-lightbox="/saas-landing-page-dark-modern-cyan.jpg" data-alt="SaaS Landing Page">
-            <img src="/saas-landing-page-dark-modern-cyan.jpg" alt="SaaS Landing Page" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-            <div class="zoom-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-semibold mb-2">SaaS Landing Page</h3>
-            <p class="text-muted text-sm mb-4">Modern landing page for SaaS product</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Next.js</span>
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Tailwind</span>
-              <span class="px-3 py-1 bg-zinc-800 text-cyan-400 text-xs rounded-full">Framer Motion</span>
-            </div>
-            <div class="flex gap-4">
-              <a href="https://github.com/licyafreoli/saas-landing" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-primary hover:text-cyan-400 transition-colors hover-target" data-i18n="projects.btn.code">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                Código
-              </a>
-              <a href="https://saas-demo.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors hover-target">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                Demo
-              </a>
-            </div>
-          </div>
-        </div>
+          </a>
+        </article>
       </div>
 
     </div>
@@ -1037,7 +1126,7 @@
             </svg>
           </a>
 
-          <a href="https://instagram.com/licyafreoli" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-primary transition-colors hover-target" aria-label="Instagram">
+          <a href="https://instagram.com/freolitech" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-primary transition-colors hover-target" aria-label="Instagram">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
             </svg>
@@ -1088,7 +1177,23 @@
         "projects.titleHighlight": "Projetos",
         "projects.description": "Trabalhos de desenvolvimento que realizei",
         "projects.filter.all": "Todos",
+        "projects.filter.label": "Filtrar projetos",
+        "projects.tech.label": "Tecnologias",
         "projects.btn.code": "Código",
+        "projects.btn.repository": "Ver repositório",
+        "projects.btn.visit": "Visitar projeto",
+        "projects.reis.title": "Reis Marcas e Patentes",
+        "projects.reis.label": "Projeto colaborativo",
+        "projects.reis.desc": "Aplicativo multiplataforma para cadastro, autenticação e acompanhamento de processos por clientes, colaboradores e parceiros.",
+        "projects.reis.aria": "Abrir Reis Marcas e Patentes no GitHub",
+        "projects.cmpisos.label": "Site publicado",
+        "projects.cmpisos.desc": "Site institucional responsivo com catálogo pesquisável, filtros de produtos, paginação, FAQ e contato comercial integrado.",
+        "projects.cmpisos.aria": "Visitar o site CM Pisos",
+        "projects.cmpisos.imageAlt": "Ambiente corporativo com piso em carpete",
+        "projects.reisCopy.title": "Reis Project — Versão consolidada",
+        "projects.reisCopy.label": "Versão consolidada",
+        "projects.reisCopy.desc": "Entrega consolidada do aplicativo Reis, com fluxos de cadastro, perfil, comunicação e gestão visual de processos.",
+        "projects.reisCopy.aria": "Abrir a versão consolidada do Reis Project no GitHub",
 
         "design.title": "Trabalhos de",
         "design.titleHighlight": "Design",
@@ -1174,7 +1279,23 @@
         "projects.titleHighlight": "Projects",
         "projects.description": "Development work I've done",
         "projects.filter.all": "All",
+        "projects.filter.label": "Filter projects",
+        "projects.tech.label": "Technologies",
         "projects.btn.code": "Code",
+        "projects.btn.repository": "View repository",
+        "projects.btn.visit": "Visit project",
+        "projects.reis.title": "Reis Trademarks and Patents",
+        "projects.reis.label": "Collaborative project",
+        "projects.reis.desc": "Cross-platform app for registration, authentication and case tracking by clients, team members and partners.",
+        "projects.reis.aria": "Open Reis Trademarks and Patents on GitHub",
+        "projects.cmpisos.label": "Live website",
+        "projects.cmpisos.desc": "Responsive business website with a searchable catalog, product filters, pagination, FAQ and integrated sales contact.",
+        "projects.cmpisos.aria": "Visit the CM Pisos website",
+        "projects.cmpisos.imageAlt": "Corporate interior with carpet flooring",
+        "projects.reisCopy.title": "Reis Project — Consolidated version",
+        "projects.reisCopy.label": "Consolidated version",
+        "projects.reisCopy.desc": "Consolidated delivery of the Reis app, with registration, profile, communication and visual case-management flows.",
+        "projects.reisCopy.aria": "Open the consolidated Reis Project version on GitHub",
 
         "design.title": "Design",
         "design.titleHighlight": "Work",
@@ -1260,7 +1381,23 @@
         "projects.titleHighlight": "Proyectos",
         "projects.description": "Trabajos de desarrollo que realicé",
         "projects.filter.all": "Todos",
+        "projects.filter.label": "Filtrar proyectos",
+        "projects.tech.label": "Tecnologías",
         "projects.btn.code": "Código",
+        "projects.btn.repository": "Ver repositorio",
+        "projects.btn.visit": "Visitar proyecto",
+        "projects.reis.title": "Reis Marcas y Patentes",
+        "projects.reis.label": "Proyecto colaborativo",
+        "projects.reis.desc": "Aplicación multiplataforma para registro, autenticación y seguimiento de procesos por clientes, colaboradores y socios.",
+        "projects.reis.aria": "Abrir Reis Marcas y Patentes en GitHub",
+        "projects.cmpisos.label": "Sitio publicado",
+        "projects.cmpisos.desc": "Sitio corporativo responsivo con catálogo buscable, filtros de productos, paginación, preguntas frecuentes y contacto comercial integrado.",
+        "projects.cmpisos.aria": "Visitar el sitio de CM Pisos",
+        "projects.cmpisos.imageAlt": "Ambiente corporativo con piso de alfombra",
+        "projects.reisCopy.title": "Reis Project — Versión consolidada",
+        "projects.reisCopy.label": "Versión consolidada",
+        "projects.reisCopy.desc": "Entrega consolidada de la aplicación Reis, con flujos de registro, perfil, comunicación y gestión visual de procesos.",
+        "projects.reisCopy.aria": "Abrir la versión consolidada de Reis Project en GitHub",
 
         "design.title": "Trabajos de",
         "design.titleHighlight": "Diseño",
@@ -1346,7 +1483,23 @@
         "projects.titleHighlight": "Projets",
         "projects.description": "Travaux de développement",
         "projects.filter.all": "Tous",
+        "projects.filter.label": "Filtrer les projets",
+        "projects.tech.label": "Technologies",
         "projects.btn.code": "Code",
+        "projects.btn.repository": "Voir le dépôt",
+        "projects.btn.visit": "Visiter le projet",
+        "projects.reis.title": "Reis Marques et Brevets",
+        "projects.reis.label": "Projet collaboratif",
+        "projects.reis.desc": "Application multiplateforme pour l'inscription, l'authentification et le suivi des dossiers par les clients, collaborateurs et partenaires.",
+        "projects.reis.aria": "Ouvrir Reis Marques et Brevets sur GitHub",
+        "projects.cmpisos.label": "Site publié",
+        "projects.cmpisos.desc": "Site vitrine responsive avec catalogue consultable, filtres produits, pagination, FAQ et contact commercial intégré.",
+        "projects.cmpisos.aria": "Visiter le site CM Pisos",
+        "projects.cmpisos.imageAlt": "Intérieur d'entreprise avec sol en moquette",
+        "projects.reisCopy.title": "Reis Project — Version consolidée",
+        "projects.reisCopy.label": "Version consolidée",
+        "projects.reisCopy.desc": "Livraison consolidée de l'application Reis, avec des parcours d'inscription, de profil, de communication et de gestion visuelle des dossiers.",
+        "projects.reisCopy.aria": "Ouvrir la version consolidée de Reis Project sur GitHub",
 
         "design.title": "Travaux de",
         "design.titleHighlight": "Design",
@@ -1432,7 +1585,23 @@
         "projects.titleHighlight": "Progetti",
         "projects.description": "Lavori di sviluppo che ho realizzato",
         "projects.filter.all": "Tutti",
+        "projects.filter.label": "Filtra progetti",
+        "projects.tech.label": "Tecnologie",
         "projects.btn.code": "Codice",
+        "projects.btn.repository": "Vedi repository",
+        "projects.btn.visit": "Visita progetto",
+        "projects.reis.title": "Reis Marchi e Brevetti",
+        "projects.reis.label": "Progetto collaborativo",
+        "projects.reis.desc": "App multipiattaforma per registrazione, autenticazione e monitoraggio delle pratiche da parte di clienti, collaboratori e partner.",
+        "projects.reis.aria": "Apri Reis Marchi e Brevetti su GitHub",
+        "projects.cmpisos.label": "Sito pubblicato",
+        "projects.cmpisos.desc": "Sito aziendale responsive con catalogo ricercabile, filtri prodotto, paginazione, FAQ e contatto commerciale integrato.",
+        "projects.cmpisos.aria": "Visita il sito CM Pisos",
+        "projects.cmpisos.imageAlt": "Ambiente aziendale con pavimento in moquette",
+        "projects.reisCopy.title": "Reis Project — Versione consolidata",
+        "projects.reisCopy.label": "Versione consolidata",
+        "projects.reisCopy.desc": "Consegna consolidata dell'app Reis, con flussi di registrazione, profilo, comunicazione e gestione visiva delle pratiche.",
+        "projects.reisCopy.aria": "Apri la versione consolidata di Reis Project su GitHub",
 
         "design.title": "Lavori di",
         "design.titleHighlight": "Design",
@@ -1522,6 +1691,20 @@
           el.placeholder = translations[lang][key];
         }
       });
+
+      document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+        const key = el.getAttribute('data-i18n-aria-label');
+        if (translations[lang] && translations[lang][key]) {
+          el.setAttribute('aria-label', translations[lang][key]);
+        }
+      });
+
+      document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+        const key = el.getAttribute('data-i18n-alt');
+        if (translations[lang] && translations[lang][key]) {
+          el.alt = translations[lang][key];
+        }
+      });
     }
 
     document.getElementById('langBtn').addEventListener('click', () => {
@@ -1570,9 +1753,11 @@
         document.querySelectorAll('.filter-btn').forEach(b => {
           b.classList.remove('bg-primary', 'text-background');
           b.classList.add('bg-card', 'text-muted');
+          b.setAttribute('aria-pressed', 'false');
         });
         btn.classList.remove('bg-card', 'text-muted');
         btn.classList.add('bg-primary', 'text-background');
+        btn.setAttribute('aria-pressed', 'true');
 
         const filter = btn.dataset.filter;
         document.querySelectorAll('.project-card').forEach(card => {
